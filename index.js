@@ -28,7 +28,7 @@ var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "",
+    password: "mrsbudiman",
     database: "employer_tracker_db"
 
 });
@@ -36,4 +36,26 @@ var connection = mysql.createConnection({
 connection.connect(function (err) {
     if (err) throw err;
     console.log("connected as id" + connection.threadId);
+    start();
 });
+
+
+function start() {
+    inquirer
+        .prompt([
+            {
+                type: "list",
+                name: "start",
+                message: "What would you like to do?",
+                choices: [
+                    "View All Employees",
+                    "View All Employees by Department",
+                    "View All Employees by Role",
+                    "Add an Employee",
+                    "Remove an Employee",
+                    "Update Employee Role",
+                    "View All Roles",
+                ]
+            }
+        ])
+}
