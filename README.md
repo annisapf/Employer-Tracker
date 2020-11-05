@@ -44,12 +44,6 @@ As a business owner, I want to be able to view and manage the departments, roles
 
 ## Screenshots
 
-index.tml
-![Note-Taker (1)](https://user-images.githubusercontent.com/7066137/97694602-f2a35700-1af6-11eb-8ee2-c2132a7e9bbd.png)
-
-
-notes.html 
-![Note-Taker](https://user-images.githubusercontent.com/7066137/97694494-c25bb880-1af6-11eb-9110-4a9710e175bf.png)
 
    
 ## Installation
