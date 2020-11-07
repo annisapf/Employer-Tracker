@@ -2,6 +2,7 @@ const mysql = require('mysql');
 const inquirer = require('inquirer');
 const logo = require('asciiart-logo');
 const config = require('./package.json');
+require('dotenv').config();
 
 const longText = 'by Annisa';
 
@@ -25,7 +26,7 @@ console.log(
 
 var connection = mysql.createConnection({
 
-    host: "localhost",
+    host: 'localhost',
     port: 3306,
     user: "root",
     password: "mrsbudiman",
@@ -53,8 +54,7 @@ const start = () => {
                     "View All Employees by Role",
                     "Add an Employee",
                     "Add a Department",
-                    "Add a Role",
-                    "Update Employee Roles",
+                    "Update Employee Roles"
                 ]
             }
         ])
@@ -64,6 +64,7 @@ const start = () => {
                     viewEmployees();
                     break;
                 case "View All Employees by Department":
+                    console.log("view testing");
                     viewDeparments();
                     break;
                 case "View All Employees by Role":
@@ -72,11 +73,13 @@ const start = () => {
                 case "Add an Employee":
                     addEmployee();
                     break;
+                case "Add a Department":
+                    addDepartment();
+                    break;
 
                 case "Update Employee Roles":
                     updateRole();
                     break;
-
                 default:
 
                     connection.end();
@@ -85,7 +88,7 @@ const start = () => {
 }
 
 const viewEmployees = () => {
-    const query = "SELECT first_name, last_name FROM employee";
+    const query = "SELECT employee.role_id,employee.first_name, employee.last_name, role.title, employee.manager_id,role.salary FROM employee,role where employee.role_id = role.id;";
 
     connection.query(query, (err, res) => {
         if (err) throw err;
@@ -95,10 +98,13 @@ const viewEmployees = () => {
 };
 
 const viewDeparments = () => {
+    console.log("testing view department");
     const query = "SELECT * FROM department;"
     connection.query(
         query, (err, res) => {
+            console.log(err + ": " + res);
             if (err) throw err;
+
             inquirer
                 .prompt([
                     {
@@ -130,7 +136,7 @@ const viewDeparments = () => {
 };
 
 const viewRoles = () => {
-    const query = "SELECT title, salary FROM role";
+    const query = "SELECT id, title, salary FROM role";
 
     connection.query(query, (err, res) => {
         if (err) throw err;
@@ -138,6 +144,28 @@ const viewRoles = () => {
         start();
     })
 };
+
+const addDepartment = () => {
+    inquirer
+        .prompt({
+            name: 'departmentName',
+            type: 'input',
+            message: 'What is the name of deparment?'
+        })
+        .then(function (data) {
+            const query = connection.query(
+                "INSERT INTO department SET ?",
+                {
+                    name: data.departmentName
+                },
+                function (err, res) {
+                    if (err) throw err;
+                    console.log(res.affectedRows + ' department added\n')
+                    start();
+                }
+            )
+        })
+}
 
 const addEmployee = () => {
     inquirer
@@ -340,3 +368,4 @@ const updateRole = () => {
                 });
         });
 };
+
