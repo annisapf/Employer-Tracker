@@ -2,7 +2,6 @@ const mysql = require('mysql');
 const inquirer = require('inquirer');
 const logo = require('asciiart-logo');
 const config = require('./package.json');
-require('dotenv').config();
 
 const longText = 'by Annisa';
 
@@ -29,7 +28,7 @@ var connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
     user: "root",
-    password: "mrsbudiman",
+    password: "",
     database: "employer_tracker_db"
 
 });
@@ -54,7 +53,8 @@ const start = () => {
                     "View All Employees by Role",
                     "Add an Employee",
                     "Add a Department",
-                    "Update Employee Roles"
+                    "Update Employee Roles",
+                    "Delete Employee"
                 ]
             }
         ])
@@ -64,7 +64,6 @@ const start = () => {
                     viewEmployees();
                     break;
                 case "View All Employees by Department":
-                    console.log("view testing");
                     viewDeparments();
                     break;
                 case "View All Employees by Role":
@@ -76,9 +75,11 @@ const start = () => {
                 case "Add a Department":
                     addDepartment();
                     break;
-
                 case "Update Employee Roles":
                     updateRole();
+                    break;
+                case "Delete Employee Roles":
+                    deleteEmployee();
                     break;
                 default:
 
@@ -369,3 +370,43 @@ const updateRole = () => {
         });
 };
 
+const deleteEmployee = () => {
+    const query = "SELECT CONCAT(first_name, ' ', last_name) as name FROM employee;"
+    connection.query(
+        query
+        , (err, res) => {
+            if (err) throw err;
+            inquirer
+                .prompt(
+                    {
+                        type: "list",
+                        message: "Which Employee would you like to delete?",
+                        name: "selectedEmployee",
+                        choices: () => {
+                            var choiceArray = [];
+                            for (const item of res) {
+                                choiceArray.push(item.name);
+                            }
+                            return choiceArray;
+                        }
+                    }
+                )
+                .then(data => {
+                    const employee = data.selectedEmployee.split(" ");
+                    const query = "DELETE FROM employee WHERE ? AND ?";
+                    connection.query(
+                        query, [
+                        {
+                            first_name: employee[0]
+                        },
+                        {
+                            last_name: employee[1]
+                        }
+                    ], err => {
+                        if (err) throw err;
+                        console.log("Employee Is Successfully Deleted!");
+                        start();
+                    });
+                });
+        });
+};

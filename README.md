@@ -36,7 +36,9 @@ As a business owner, I want to be able to view and manage the departments, roles
 
 * Application should allow users to view departments, roles, employees
 
-* Application should allow users to delete previously saved notes.update employee roles
+* Application should allow users to update employee roles
+
+* Application should allow users to delete departments, roles and employees 
 
 ## Demo Video
 
@@ -61,6 +63,10 @@ npm i
 
 ```
 npm install inquirer
+```
+
+```
+npm install mysql
 ```
 
 ```
