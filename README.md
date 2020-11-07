@@ -42,9 +42,20 @@ As a business owner, I want to be able to view and manage the departments, roles
 
 ## Demo Video
 
+View All Employees
+
+View All Employees
+![Demo Employer Tracker](https://j.gifs.com/AN4xZj.gif)
+
+Add - Delete Employees
+![Demo Employer Tracker](https://j.gifs.com/nxKP1p.gif)
 
 
 ## Screenshots
+
+![Screen Shot 2020-11-07 at 4 05 42 pm](https://user-images.githubusercontent.com/7066137/98432613-1b89a480-2114-11eb-875a-a36477b37f0f.png)
+
+![Screen Shot 2020-11-07 at 4 06 11 pm](https://user-images.githubusercontent.com/7066137/98432635-4a077f80-2114-11eb-85ae-e10dcb501170.png)
 
 
    

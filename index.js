@@ -78,7 +78,7 @@ const start = () => {
                 case "Update Employee Roles":
                     updateRole();
                     break;
-                case "Delete Employee Roles":
+                case "Delete Employee":
                     deleteEmployee();
                     break;
                 default:
@@ -89,7 +89,7 @@ const start = () => {
 }
 
 const viewEmployees = () => {
-    const query = "SELECT employee.role_id,employee.first_name, employee.last_name, role.title, employee.manager_id,role.salary FROM employee,role where employee.role_id = role.id;";
+    const query = "SELECT employee.role_id,employee.first_name, employee.last_name, role.title, role.salary, employee.manager_id FROM employee,role where employee.role_id = role.id;";
 
     connection.query(query, (err, res) => {
         if (err) throw err;
@@ -99,11 +99,11 @@ const viewEmployees = () => {
 };
 
 const viewDeparments = () => {
-    console.log("testing view department");
+
     const query = "SELECT * FROM department;"
     connection.query(
         query, (err, res) => {
-            console.log(err + ": " + res);
+
             if (err) throw err;
 
             inquirer
